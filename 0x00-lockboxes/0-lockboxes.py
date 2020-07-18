@@ -15,26 +15,12 @@ def canUnlockAll(boxes):
 
     Return: True if all the boxes can be opened, False otherwise
     '''
-    open = openBox(boxes, 0, {0})
+    open = {0}
+    for i, box in enumerate(boxes):
+        for key in box:
+            if key != i:
+                open.add(key)
     for i in range(len(boxes)):
         if i not in open:
             return False
     return True
-
-
-def openBox(boxes, box, open):
-    '''
-    openBox - Open the specified box
-    @boxes: List of lists containing the keys
-    @box: The current box to open
-    @open: Set containing the boxes that are currently open
-
-    Return: Set containing all the boxes that can be opened
-    '''
-    if box >= len(boxes):
-        return
-    for key in boxes[box]:
-        if key not in open:
-            open.add(key)
-            openBox(boxes, key, open)
-    return open
