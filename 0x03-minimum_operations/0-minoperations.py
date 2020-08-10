@@ -14,16 +14,13 @@ def minOperations(n):
 
     Return: The fewest number of operations needed, or 0
     '''
-    if n < 2 or not isinstance(n, int):
+    if n < 2:
         return 0
-    if n < 6:
-        return n
-    min = {}
-    for i in range(2, 6):
-        min[i] = i
-    for i in range(n - 1, 1, -1):
-        if n % i == 0:
-            if not min.get(i):
-                min[i] = minOperations(i)
-            return min[i] + n // i
-    return n
+    divisor, sum = 2, 0
+    while divisor <= n / 2:
+        if n % divisor == 0:
+            n //= divisor
+            sum += divisor
+        else:
+            divisor += 1
+    return sum + n
