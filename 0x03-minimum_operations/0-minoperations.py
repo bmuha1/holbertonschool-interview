@@ -14,7 +14,7 @@ def minOperations(n):
 
     Return: The fewest number of operations needed, or 0
     '''
-    if n < 2:
+    if n < 2 or not isinstance(n, int):
         return 0
     if n < 6:
         return n
