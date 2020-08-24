@@ -1,24 +1,46 @@
 #include "lists.h"
 
 /**
- * add_nodeint - adds a new node at the beginning of a listint_t list
+ * reverse_list - reverse a listint_t list
  * @head: pointer to pointer of first node of listint_t list
- * @n: integer to be included in new node
- * Return: address of the new element or NULL if it fails
  */
-listint_t *add_nodeint(listint_t **head, const int n)
+void reverse_list(listint_t **head)
 {
-	listint_t *new;
+	listint_t *prev = NULL;
+	listint_t *curr = *head, *next;
 
-	new = malloc(sizeof(listint_t));
-	if (!new)
-		return (NULL);
+	while (curr)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	*head = prev;
+}
 
-	new->n = n;
-	new->next = *head;
-	*head = new;
+/**
+ * compare_lists - check if 2 lists are the same
+ * @head1: pointer to first list
+ * @head2: pointer to second list
+ * Return: 1 if they're the same, 0 otherwise
+ */
+int compare_lists(listint_t *head1, listint_t *head2)
+{
+	listint_t *first = head1;
+	listint_t *second = head2;
 
-	return (new);
+	while (first && second)
+	{
+		if (first->n != second->n)
+			return (0);
+		first = first->next;
+		second = second->next;
+	}
+
+	if (!first && !second)
+		return (1);
+	return (0);
 }
 
 /**
@@ -28,34 +50,40 @@ listint_t *add_nodeint(listint_t **head, const int n)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *reverse;
-	listint_t *reverse_head;
-	listint_t *current;
-	int size = 0, i = 0;
+	listint_t *slow = *head, *fast = *head;
+	listint_t *second_half, *prev = *head;
+	listint_t *mid = NULL;
+	int palindrome = 1;
 
-	reverse = NULL;
-	current = *head;
-	while (current)
+	if (fast && fast->next)
 	{
-		add_nodeint(&reverse, current->n);
-		current = current->next;
-		size++;
-	}
-
-	current = *head;
-	reverse_head = reverse;
-	while (i < size / 2)
-	{
-		if (current->n != reverse->n)
+		while (fast && fast->next)
 		{
-			free_listint(reverse_head);
-			return (0);
+			fast = fast->next->next;
+			prev = slow;
+			slow = slow->next;
 		}
-		current = current->next;
-		reverse = reverse->next;
-		i++;
+
+		if (fast)
+		{
+			mid = slow;
+			slow = slow->next;
+		}
+
+		second_half = slow;
+		prev->next = NULL;
+		reverse_list(&second_half);
+		palindrome = compare_lists(*head, second_half);
+		reverse_list(&second_half);
+
+		if (mid)
+		{
+			prev->next = mid;
+			mid->next = second_half;
+		}
+		else
+			prev->next = second_half;
 	}
 
-	free_listint(reverse_head);
-	return (1);
+	return (palindrome);
 }
