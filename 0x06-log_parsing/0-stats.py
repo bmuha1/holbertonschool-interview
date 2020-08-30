@@ -26,7 +26,8 @@ def print_status(size, status):
     '''
     print('File size: {}'.format(size))
     for key, value in sorted(status.items()):
-        print('{}: {}'.format(key, value))
+        if value:
+            print('{}: {}'.format(key, value))
 
 
 if __name__ == '__main__':
