@@ -43,5 +43,6 @@ if __name__ == '__main__':
             count += 1
             if not count % 10:
                 print_status(size, status)
+        print_status(size, status)
     finally:
         print_status(size, status)
