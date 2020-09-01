@@ -37,9 +37,10 @@ if __name__ == '__main__':
     try:
         for line in sys.stdin:
             args = line.split()
-            if args[-2] in status:
-                status[args[-2]] += 1
-            size += int(args[-1])
+            if len(args) > 2:
+                if args[-2] in status:
+                    status[args[-2]] += 1
+                size += int(args[-1])
             count += 1
             if not count % 10:
                 print_status(size, status)
