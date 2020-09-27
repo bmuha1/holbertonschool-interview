@@ -57,9 +57,9 @@ int slide_line(int *line, size_t size, int direction)
  */
 void slide_left(int *line, size_t size)
 {
-	size_t i, temp, current = 0;
+	int i, temp, current = 0;
 
-	for (i = 0; i < size && current < size; i++)
+	for (i = 0; i < (int) size && current < (int) size; i++)
 	{
 		while (line[current] != 0)
 			current++;
@@ -79,8 +79,7 @@ void slide_left(int *line, size_t size)
  */
 void slide_right(int *line, size_t size)
 {
-	size_t temp, current = size - 1;
-	int i;
+	int i, temp, current = size - 1;
 
 	for (i = size - 1; i >= 0 && current >= 0; i--)
 	{
