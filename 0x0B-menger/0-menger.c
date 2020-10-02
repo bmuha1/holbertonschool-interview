@@ -16,7 +16,7 @@ void menger(int level)
 	grid = alloc_grid(size, size);
 	if (grid == NULL)
 		return;
-	
+
 	fill_sponge(grid, 0, size, 0, size);
 	draw_sponge(grid, size);
 	free_grid(grid, size);
@@ -38,16 +38,24 @@ void fill_sponge(int **grid, int x_start, int x_end, int y_start, int y_end)
 		grid[x_start][y_start] = 1;
 	else
 	{
-		fill_sponge(grid, x_start, x_start + step, y_start, y_start + step);
-		fill_sponge(grid, x_start, x_start + step, y_start + step, y_end - step);
-		fill_sponge(grid, x_start, x_start + step, y_end - step, y_end);
+		fill_sponge(grid, x_start, x_start + step,
+			    y_start, y_start + step);
+		fill_sponge(grid, x_start, x_start + step,
+			    y_start + step, y_end - step);
+		fill_sponge(grid, x_start, x_start + step,
+			    y_end - step, y_end);
 
-		fill_sponge(grid, x_start + step, x_start + step * 2, y_start, y_start + step);
-		fill_sponge(grid, x_start + step, x_start + step * 2, y_end - step, y_end);
+		fill_sponge(grid, x_start + step, x_start + step * 2,
+			    y_start, y_start + step);
+		fill_sponge(grid, x_start + step, x_start + step * 2,
+			    y_end - step, y_end);
 
-		fill_sponge(grid, x_end - step, x_end, y_start, y_start + step);
-		fill_sponge(grid, x_end - step, x_end, y_start + step, y_end - step);
-		fill_sponge(grid, x_end - step, x_end, y_end - step, y_end);
+		fill_sponge(grid, x_end - step, x_end,
+			    y_start, y_start + step);
+		fill_sponge(grid, x_end - step, x_end,
+			    y_start + step, y_end - step);
+		fill_sponge(grid, x_end - step, x_end,
+			    y_end - step, y_end);
 	}
 }
 
