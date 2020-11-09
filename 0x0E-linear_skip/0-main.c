@@ -27,6 +27,8 @@ int main(void)
 	printf("Found %d at index: %lu\n\n", 53, res->index);
 	res =  linear_skip(list, 2);
 	printf("Found %d at index: %lu\n\n", 2, res->index);
+	res =  linear_skip(list, -1);
+	printf("Found %d at index: %p\n\n", -1, (void *) res);
 	res =  linear_skip(list, 999);
 	printf("Found %d at index: %p\n", 999, (void *) res);
 
