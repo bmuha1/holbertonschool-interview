@@ -8,10 +8,15 @@ def rain(walls):
     """
     Calculate how much water will be retained after it rains
     """
-    if not walls:
-        return 0
     retained = 0
-    for i in range(1, len(walls) - 1):
-        if walls[i - 1] > walls[i] < walls[i + 1]:
-            retained += min(walls[i - 1], walls[i + 1]) - walls[i]
+    stack = []
+    for i in range(len(walls)):
+        while stack and walls[i] > walls[stack[-1]]:
+            top = stack.pop()
+            if not stack:
+                break
+            distance = i - stack[-1] - 1
+            between = min(walls[i], walls[stack[-1]]) - walls[top]
+            retained += distance * between
+        stack.append(i)
     return retained
