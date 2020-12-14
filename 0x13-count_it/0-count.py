@@ -7,6 +7,10 @@ import requests
 
 
 def count_words(subreddit, word_list, hot_list=[], after=''):
+    """
+    Query the Reddit API, parse the titles of all hot articles for a given
+    subreddit, and print a sorted count of given keywords
+    """
     try:
         r = requests.get('https://www.reddit.com/r/{}/hot.json?after={}'.
                          format(subreddit, after),
